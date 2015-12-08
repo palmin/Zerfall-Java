@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<guns>
+	<gun name = "AK-47" id = "ak">
+		<mode> full </mode>
+		<rpm> 600 </rpm>
+		<eti> 99 </eti>
+		<clip> 30 </clip>
+	</gun>
+	<gun name = "AUG" id = "aug">
+		<mode> full </mode>
+		<rpm> 715 </rpm>
+		<eti> 48 </eti>
+		<clip> 30 </clip>
+	</gun>
+	<gun name = "Dragunov" id = "drgv">
+		<mode> semi </mode>
+		<rpm> 30 </rpm>
+		<eti> 192 </eti>
+		<clip> 10 </clip>
+  </gun>
+	<gun name = "FAL" id = "fal">
+		<mode> semi </mode>
+		<rpm> 75 </rpm>
+		<eti> 169 </eti>
+		<clip> 30 </clip>
+	</gun>
+	<gun name = "FAMAS F1" id = "famas">
+		<mode> full </mode>
+		<rpm> 950 </rpm>
+		<eti> 47 </eti>
+		<clip> 25 </clip>
+	</gun>
+	<gun name = "G3" id = "hkg3">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "L2A3" id = "l2a3">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "M1911" id = "colt">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "Thompson" id = "m1928">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "M60" id = "m60">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "M9" id = "m9">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "MP40" id = "mp40">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "PPK" id = "ppk">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "RPK" id = "rpk">
+			<mode> </mode>
+			<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+	<gun name = "Stoner 63" id = "s63">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+		<gun name = "Uzi" id = "uzi">
+		<mode> </mode>
+		<rpm> </rpm>
+		<eti> </eti>
+		<clip> </clip>
+	</gun>
+</guns>

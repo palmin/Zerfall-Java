@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="lib/base/dxf/dxf.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/dxf/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/dxf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/net/net.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/net/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/net"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/pdf/itext.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/pdf/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/pdf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/pdf/pdf.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/pdf/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/pdf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/serial/jssc.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/serial/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/serial"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/serial/serial.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/serial/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/serial"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-awt-util-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-dom-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-ext-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-svggen-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-util-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/batik-xml-1.8.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/svg/svg.jar" sourcepath="/Users/campbell/Applications/Processing.app/Contents/Java/modes/java/libraries/svg/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/svg"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/core/core.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/core/gluegen-rt-natives-macosx-universal.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/core/gluegen-rt.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/core/jogl-all-natives-macosx-universal.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/base/core/jogl-all.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/base/core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/user/sound/sound.jar" sourcepath="/Users/campbell/Documents/Processing/Sketchbook/Zerfall/libraries/sound/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/campbell/Documents/Processing/Sketchbook/Zerfall/libraries/sound/reference/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zerfall/lib/user/sound"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

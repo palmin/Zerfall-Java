@@ -4,9 +4,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class AudioLoader {
+public abstract class Audio extends Clip {
 
-	public Clip loadClip(String filename) {
+	public static Clip load(String filename) {
 		Clip in = null;
 		try {
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource(filename));
@@ -17,5 +17,17 @@ public class AudioLoader {
 		}
 		return in;
 	}
+	
+	public void play(){
+        clip.setFramePosition(0);
+        clip.start();
+    }
+    public void loop(){
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    public void stop(){
+            clip.stop();
+        }
+    }
 
 }

@@ -9,12 +9,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import processing.core.PApplet;
-import processing.core.PFont;
-import processing.core.PImage;
-import processing.data.XML;
-import processing.sound.SoundFile;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -25,21 +19,21 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class Main {
-	BufferedImage bitmap, map, foreground;
-	boolean keys[];
+	static Image bitmap, map, foreground;
+	static boolean keys[];
 	static boolean itemsLoaded;
-	static final Font orbitron = new Font("fonts/orbitron.ttf", Font.PLAIN, 36);
+	static Font orbitron = new Font("fonts/orbitron.ttf", Font.PLAIN, 36);
 	static ArrayList<zombieClass> zombies;
 	static Player Player;
-	XML guns;
+	//XML guns;
 	static JFrame window;
 	static JLabel label;
 
 	public void init() {
 		window = new JFrame();
 		window.setSize(1280, 720);
+		window.setVisible(true);
 		label = new JLabel("First Name");
-		label.setFont(new Font("Courier New", Font.ITALIC, 12));
 		label.setForeground(Color.GRAY);
 		zombies = new ArrayList<zombieClass>();
 		loadItems();
@@ -63,13 +57,9 @@ public abstract class Main {
 	}
 
 	public synchronized void loadItems() {
-		try {
-			bitmap = ImageIO.read(new File("Maps/bitmap.png"));
-			map = ImageIO.read(new File("Maps/map.png"));
-			foreground = ImageIO.read(new File("Maps/foreground.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		bitmap = new Image("Maps/bitmap.png");
+		map = new Image("Maps/map.png");
+		foreground = new Image("Maps/foreground.png");
 		keys = new boolean[128];
 		//guns = loadXML("Resources/Gun Information.xml");
 		itemsLoaded = true;
@@ -81,14 +71,8 @@ class zombieClass extends Main {
 	BufferedImage sheet = null;
 	int sprite = 0, xpos = 2270, ypos = 940, health = 100, yspeed = 1, xspeed;
 	boolean collision[] = new boolean[5];
-
-	zombieClass(int speed) {
-		try {
-			sheet = ImageIO.read(new File("sprites/zombie.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		xspeed = speed;
+	zombieClass(int xspeed) {
+		sheet = new Image("sprites/zombie.png"));
 	}
 
 	void movement() {
@@ -96,26 +80,26 @@ class zombieClass extends Main {
 			collision[i] = false;
 		for (int x = xpos; x <= xpos + 100; x++) {
 			for (int y = ypos + 161; y <= ypos + 161 + Math.abs(yspeed); y++) {
-				int c = bitmap.getRGB(x, y);
+				int c = bitmap.get(x, y);
 				collision[1] = (c == 0xFF0000 || c == 0x0000FF) ? true : collision[1];
 				collision[0] = (c == 0x0000FF) ? true : collision[0];
 			}
 		}
 		for (int x = xpos; x <= xpos + 100; x++) {
 			for (int y = ypos; y <= ypos - 1 - Math.abs(yspeed); y--) {
-				int c = bitmap.getRGB(x, y);
+				int c = bitmap.get(x, y);
 				collision[2] = (c == 0x0000FF) ? true : collision[2];
 			}
 		}
 		for (int x = xpos; x <= xpos - xspeed; x--) {
 			for (int y = ypos; y <= ypos + 162; y++) {
-				int c = bitmap.getRGB(x, y);
+				int c = bitmap.get(x, y);
 				collision[3] = (c == 0xFF0000 || c == 0x0000FF) ? true : collision[3];
 			}
 		}
 		for (int x = xpos + 100; x <= xpos + 100 + xspeed; x++) {
 			for (int y = ypos; y <= ypos + 162; y++) {
-				int c = bitmap.getRGB(x, y);
+				int c = bitmap.get(x, y);
 				collision[4] = (c == 0x0000FF || c == 0xFF0000) ? true : collision[4];
 			}
 		}
@@ -139,25 +123,19 @@ class zombieClass extends Main {
 		}
 	}
 }
-
 class timer extends Main {
 	double activation, duration;
 	boolean active;
-
-	timer(double d) {
-		duration = d;
+	timer(double duration) {
 	}
-
 	void check() {
 		if (System.currentTimeMillis() * .001 - activation > duration)
 			active = false;
 	}
-
 	void activate() {
 		activation = System.currentTimeMillis() * .001;
 		active = true;
 	}
-
 	void set(float d) {
 		duration = d;
 	}

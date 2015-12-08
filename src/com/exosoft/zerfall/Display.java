@@ -2,10 +2,6 @@ package com.exosoft.zerfall;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,15 +9,13 @@ import javax.swing.JLabel;
 public abstract class Display extends Main {
 
 	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(-(Player.xpos + Player.sheet[0].getWidth() / 2) + window.getWidth() / 2,
-				-(Player.ypos + Player.sheet[0].getHeight() / 2) + window.getHeight() / 2);
-		g2d.drawImage(map, 0, 0, null);
-		g2d.drawImage(Player.sheet[Player.sprite], Player.xpos, Player.ypos, null);
+		int translateX = (int) (-(Player.xpos + Player.sheet[0].getWidth() / 2) + window.getWidth() / 2);
+		int translateY = (int) (-(Player.ypos + Player.sheet[0].getHeight() / 2) + window.getHeight() / 2);
+		map.draw(0, 0, translateX, translateY);
+		Player.sheet[Player.sprite].draw(Player.xpos, Player.ypos, translateX, translateY);
 		for (zombieClass zombie : zombies)
-			g2d.drawImage(zombie.sheet.getSubimage(zombie.sprite * 100, 0, 100, 162), zombie.xpos, zombie.ypos, null);
-		g2d.drawImage(foreground, 0, 0, null);
-		g2d.translate(Player.xpos + Player.sheet[0].getWidth() / 2, Player.ypos + Player.sheet[0].getHeight() / 2);
+			zombie.sheet.get(zombie.sprite * 100, 0, 100, 162).draw(zombie.xpos, zombie.ypos, translateX, translateY);
+		foreground.draw(0, 0, translateX, translateY);
 		printText(Integer.toString(Player.gunClip) + "/" + Integer.toString(Player.clipSize[Player.weapon]), 1270, 700,
 				36, 0xFFFFFF, JLabel.RIGHT);
 		printText(Player.gunID[Player.weapon], 1270, 660, 24, 0xEEEEEE, JLabel.RIGHT);

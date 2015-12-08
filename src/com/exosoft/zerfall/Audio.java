@@ -4,21 +4,19 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public abstract class Audio extends Clip {
+//Adapted from code by TdotThomas on Stack Overflow.
 
-	public static Clip load(String filename) {
-		Clip in = null;
-		try {
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource(filename));
-			in = AudioSystem.getClip();
-			in.open(audioIn);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return in;
-	}
-	
-	public void play(){
+public class Sound {
+    private Clip clip;
+    public Sound(String fileName) {
+            File file = new File(fileName);
+            if (file.exists()) {
+                AudioInputStream sound = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(sound);
+            }
+    }
+    public void play(){
         clip.setFramePosition(0);
         clip.start();
     }
@@ -29,5 +27,3 @@ public abstract class Audio extends Clip {
             clip.stop();
         }
     }
-
-}

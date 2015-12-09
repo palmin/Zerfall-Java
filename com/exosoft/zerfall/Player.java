@@ -1,16 +1,17 @@
 package com.exosoft.zerfall;
 
-import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JLabel;
 
-import sun.audio.AudioPlayer;
 
+@SuppressWarnings("serial")
 public abstract class Player extends Main {
 	Image sheet[] = new Image[8];
 	int sprite = 0;
@@ -165,7 +166,32 @@ public abstract class Player extends Main {
 			gunAudio[1][weapon].play();
 		}
 	}
+	
+	public void paint(Graphics g) {
+		int translateX = (int) (-(Player.xpos + Player.sheet[0].width() / 2) + window.getWidth() / 2);
+		int translateY = (int) (-(Player.ypos + Player.sheet[0].height() / 2) + window.getHeight() / 2);
+		map.draw(0, 0, translateX, translateY);
+		Player.sheet[Player.sprite].draw(Player.xpos, Player.ypos, translateX, translateY);
+		for (zombieClass zombie : zombies)
+			zombie.sheet.get(zombie.sprite * 100, 0, 100, 162).draw(zombie.xpos, zombie.ypos, translateX, translateY);
+		foreground.draw(0, 0, translateX, translateY);
+		printText(Integer.toString(Player.gunClip) + "/" + Integer.toString(Player.clipSize[Player.weapon]), 1270, 700,
+				36, 0xFFFFFF, JLabel.RIGHT);
+		printText(Player.gunID[Player.weapon], 1270, 660, 24, 0xEEEEEE, JLabel.RIGHT);
+	}
 
+	void printText(String text, int x, int y, int size, int fill, int align) {
+		JLabel label = new JLabel(text, align);
+		label.setFont(orbitron);
+		label.setForeground(new Color(fill));
+		label.setLocation(x, y);
+	}
+
+	void printText(int text, int x, int y, int size, int fill, int align) {
+		printText(Integer.toString(text), x, y, size, fill, align);
+	}
+
+	@SuppressWarnings("unused")
 	private class Gun extends Main {
 		public Audio gunshot, reload;
 		public int clip, damage, rate;

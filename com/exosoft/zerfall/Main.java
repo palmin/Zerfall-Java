@@ -1,5 +1,6 @@
 package com.exosoft.zerfall;
 
+import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public abstract class Main {
+@SuppressWarnings("serial")
+public abstract class Main extends Applet {
 	static Image bitmap, map, foreground;
 	static boolean keys[];
 	static boolean itemsLoaded;
@@ -17,21 +19,25 @@ public abstract class Main {
 	static ArrayList<zombieClass> zombies;
 	static Player Player;
 	//XML guns;
-	static JFrame window;
-	static JLabel label;
+	public static JFrame window;
+	public static JLabel label;
 
-	public void init() throws IOException {
-		window = new JFrame();
+	public static void main(String args[]) {
+		window = new JFrame("Zerfall");
 		window.setSize(1280, 720);
 		window.setVisible(true);
 		label = new JLabel("First Name");
 		label.setForeground(Color.GRAY);
 		zombies = new ArrayList<zombieClass>();
-		loadItems();
-	}
-
-	public static void main(String args[]) {
-		if (itemsLoaded) {
+		try {
+			loadItems();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while (itemsLoaded == false) {
+		}
+		while (itemsLoaded) {
 			Player.weapon();
 			Player.movement();
 			for (zombieClass zombie : zombies)
@@ -47,7 +53,7 @@ public abstract class Main {
 		keys[evt.getKeyCode()] = false;
 	}
 
-	public synchronized void loadItems() throws IOException { 
+	public static synchronized void loadItems() throws IOException { 
 			bitmap = new Image("Maps/bitmap.png");
 			map = new Image("Maps/map.png");
 			foreground = new Image("Maps/foreground.png");
@@ -58,6 +64,7 @@ public abstract class Main {
 
 }
 
+@SuppressWarnings("serial")
 class zombieClass extends Main {
 	Image sheet = null;
 	int sprite = 0, xpos = 2270, ypos = 940, health = 100, yspeed = 1, xspeed;
@@ -115,6 +122,10 @@ class zombieClass extends Main {
 	}
 }
 class timer extends Main {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	double activation, duration;
 	boolean active;
 	timer(double duration) {

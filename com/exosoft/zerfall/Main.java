@@ -1,18 +1,20 @@
 package com.exosoft.zerfall;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-H
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import com.exosoft.zerfall.Image;
+import com.exosoft.zerfall.Audio;
 
-public class Main {
+@SuppressWarnings("serial")
+public class Main extends JPanel {
 	static Image bitmap, map, foreground;
 	static boolean keys[];
 	static boolean itemsLoaded = true;
@@ -20,15 +22,11 @@ public class Main {
 	static ArrayList<zombieClass> zombies;
 	static Player player;
 	// XML guns;
-	public static JFrame window;
-	public static JLabel label;
+	public static Window window = new Window("Zerfall", 1280, 720);
 
 	public static void main(String args[]) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-		window = new JFrame("Zerfall");
-		window.setSize(1280, 720);
-		window.setVisible(true);S
-		label = new JLabel("First Name");
-		label.setForeground(Color.GRAY);
+
+		window.addLabel("Test", 250, 600, JLabel.RIGHT);
 		zombies = new ArrayList<zombieClass>();
 		bitmap = new Image("Maps/bitmap.png");
 		map = new Image("Maps/map.png");
@@ -41,31 +39,22 @@ public class Main {
 			player.movement();
 			for (zombieClass zombie : zombies)
 				zombie.movement();
+			window.repaint();
 		}
 	}
 
-	public static void paint(Graphics g) {
-		int translateX = (int) (-(player.xpos + player.sheet[0].width() / 2) + window.getWidth() / 2);
-		int translateY = (int) (-(player.ypos + player.sheet[0].height() / 2) + window.getHeight() / 2);
-		map.draw(0, 0, translateX, translateY);
+	@Override
+	public void paintComponent(Graphics g) {
+		int translateX = (int) (-(player.xpos + player.sheet[0].width() / 2) + window.width / 2);
+		int translateY = (int) (-(player.ypos + player.sheet[0].height() / 2) + window.height / 2);
+		window.drawImage(map, 0, 0);
 		player.sheet[player.sprite].draw(player.xpos, player.ypos, translateX, translateY);
 		for (zombieClass zombie : zombies)
 			zombie.sheet.get(zombie.sprite * 100, 0, 100, 162).draw(zombie.xpos, zombie.ypos, translateX, translateY);
 		foreground.draw(0, 0, translateX, translateY);
-		printText(Integer.toString(player.gunClip) + "/" + Integer.toString(player.clipSize[player.weapon]), 1270, 700,
-				36, 0xFFFFFF, JLabel.RIGHT);
-		printText(player.gunID[player.weapon], 1270, 660, 24, 0xEEEEEE, JLabel.RIGHT);
-	}
-
-	static void printText(String text, int x, int y, int size, int fill, int align) {
-		JLabel label = new JLabel(text, align);
-		label.setFont(orbitron);
-		label.setForeground(new Color(fill));
-		label.setLocation(x, y);
-	}
-
-	void printText(int text, int x, int y, int size, int fill, int align) {
-		printText(Integer.toString(text), x, y, size, fill, align);
+		window.addLabel(Integer.toString(player.gunClip) + "/" + Integer.toString(player.clipSize[player.weapon]), 1270, 700, JLabel.RIGHT);
+		window.addLabel(player.gunID[player.weapon], 1270, 660, JLabel.RIGHT);
+		window.reDraw();
 	}
 
 	public void keyPressed(KeyEvent evt) {

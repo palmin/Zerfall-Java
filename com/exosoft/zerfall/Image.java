@@ -1,16 +1,16 @@
 package com.exosoft.zerfall;
 
-import java.applet.Applet;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Image extends Main {
-	private BufferedImage image;
+public class Image extends JPanel {
+	public BufferedImage image;
 	private int x;
 	private int y;
 	private int translateX;

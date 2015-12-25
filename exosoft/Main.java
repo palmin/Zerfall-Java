@@ -46,7 +46,6 @@ class Main extends JFrame implements KeyListener {
 				new Main();
 			}
 		});
-
 		try {
 			map = ImageIO.read(new File("resources/Maps/map.png"));
 			bitmap = ImageIO.read(new File("resources/Maps/bitmap.png"));

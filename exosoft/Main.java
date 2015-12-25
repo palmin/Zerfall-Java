@@ -21,9 +21,9 @@ class Main extends JFrame implements KeyListener {
 	static Sheet sheet = new Sheet();
 	static Player player = new Player();
 	// Specifies the ticks per second for the logic in nanoseconds
-	static long logicSleep = (long) (1e9 / 120);
+	static long logicSleep = (long) (1e9 / 180);
 	// Specifies the ticks per second for drawing to the screen in nanoseconds
-	static long drawSleep = (long) (1e9 / 5);
+	static long drawSleep = (long) (1e9 / 60);
 	// Gives the timer a head start
 	static long startTime = System.nanoTime();
 	// Initializes the variables that keep track of the loops
@@ -52,13 +52,13 @@ class Main extends JFrame implements KeyListener {
 		} catch (IOException e) {
 		}
 		while (keys[KeyEvent.VK_ESCAPE] == false) {
-			if ((System.nanoTime() - startTime) > logicTime) {
+			if ((System.nanoTime()) > logicTime + startTime) {
 				// runs the player logic
 				player.logic();
 				// tells the game to wait for the next logic tick
 				logicTime += logicSleep;
 			}
-			if ((System.nanoTime() - startTime) > drawTime) {
+			if ((System.nanoTime()) > drawTime + startTime) {
 				// runs paintComponent
 				sheet.repaint();
 				// tells the game to wait for the next draw tick

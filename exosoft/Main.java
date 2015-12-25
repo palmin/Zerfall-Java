@@ -25,9 +25,10 @@ class Main extends JFrame implements KeyListener {
 	// Specifies the ticks per second for drawing to the screen in nanoseconds
 	static long drawSleep = (long) (1e9 / 60);
 	// Gives the timer a head start
-	static long startTime = System.nanoTime();
+	static long startTime;
 	// Initializes the variables that keep track of the loops
 	static long logicTime, drawTime;
+	static BufferedImage foreground = null;
 
 	Main() {
 		super("Zerfall");
@@ -49,16 +50,18 @@ class Main extends JFrame implements KeyListener {
 		try {
 			map = ImageIO.read(new File("resources/Maps/map.png"));
 			bitmap = ImageIO.read(new File("resources/Maps/bitmap.png"));
+			foreground = ImageIO.read(new File("resources/Maps/foreground.png"));
 		} catch (IOException e) {
 		}
+		startTime = System.nanoTime();
 		while (keys[KeyEvent.VK_ESCAPE] == false) {
-			if ((System.nanoTime()) > logicTime + startTime) {
+			if (System.nanoTime() > logicTime + startTime) {
 				// runs the player logic
 				player.logic();
 				// tells the game to wait for the next logic tick
 				logicTime += logicSleep;
 			}
-			if ((System.nanoTime()) > drawTime + startTime) {
+			if (System.nanoTime() > drawTime + startTime) {
 				// runs paintComponent
 				sheet.repaint();
 				// tells the game to wait for the next draw tick
@@ -77,6 +80,7 @@ class Main extends JFrame implements KeyListener {
 					(int) -(player.yPos + player.sprites[0].getHeight() / 2 - getHeight() / 2));
 			g.drawImage(map, 0, 0, null);
 			g.drawImage(player.sprites[player.spriteNum], (int) player.xPos, (int) player.yPos, null);
+			g.drawImage(foreground, 0, 0, null);
 		}
 	}
 
@@ -163,11 +167,11 @@ class Main extends JFrame implements KeyListener {
 					case 0xFFFF0000:
 						if (keys[KeyEvent.VK_E]) {
 							doors(x, y);
-							break;
+							continue;
 						}
 					case 0xFF000000:
 						collision[4] = true;
-						break;
+						continue;
 					}
 				}
 			}
@@ -218,6 +222,7 @@ class Main extends JFrame implements KeyListener {
 				h++;
 			for (int x2 = x; x2 < x + w + 1; x2++) {
 				for (int y2 = y; y2 < y + h + 1; y2++) {
+					foreground.setRGB(x2, y2, 0x00FFFFFF);
 					bitmap.setRGB(x2, y2, 0xFFFFFFFF);
 				}
 			}

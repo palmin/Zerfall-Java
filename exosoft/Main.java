@@ -3,6 +3,8 @@ package exosoft;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 class Main extends JFrame implements KeyListener {
@@ -20,14 +23,8 @@ class Main extends JFrame implements KeyListener {
 	static BufferedImage bitmap = null;
 	static Sheet sheet = new Sheet();
 	static Player player = new Player();
-	// Specifies the ticks per second for the logic in nanoseconds
-	static long logicSleep = (long) (1e9 / 180);
-	// Specifies the ticks per second for drawing to the screen in nanoseconds
-	static long drawSleep = (long) (1e9 / 60);
-	// Gives the timer a head start
-	static long startTime;
 	// Initializes the variables that keep track of the loops
-	static long logicTime, drawTime;
+	static Timer drawTimer, logicTimer;
 	static BufferedImage foreground = null;
 
 	Main() {
@@ -39,7 +36,6 @@ class Main extends JFrame implements KeyListener {
 		setResizable(false);
 		addKeyListener(this);
 	}
-	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -47,28 +43,25 @@ class Main extends JFrame implements KeyListener {
 				new Main();
 			}
 		});
+		drawTimer = new Timer(1000 / 60, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				sheet.repaint();
+			}
+		});
+		logicTimer = new Timer(1000 / 120, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				player.logic();
+			}
+		});
+
 		try {
 			map = ImageIO.read(new File("resources/Maps/map.png"));
 			bitmap = ImageIO.read(new File("resources/Maps/bitmap.png"));
 			foreground = ImageIO.read(new File("resources/Maps/foreground.png"));
 		} catch (IOException e) {
 		}
-		startTime = System.nanoTime();
-		while (keys[KeyEvent.VK_ESCAPE] == false) {
-			if (System.nanoTime() > logicTime + startTime) {
-				// runs the player logic
-				player.logic();
-				// tells the game to wait for the next logic tick
-				logicTime += logicSleep;
-			}
-			if (System.nanoTime() > drawTime + startTime) {
-				// runs paintComponent
-				sheet.repaint();
-				// tells the game to wait for the next draw tick
-				drawTime += drawSleep;
-			}
-		}
-		System.exit(0);
+		drawTimer.start();
+		logicTimer.start();
 	}
 
 	static class Sheet extends JPanel {
@@ -102,7 +95,7 @@ class Main extends JFrame implements KeyListener {
 	public static class Player {
 		BufferedImage sprites[] = new BufferedImage[8];
 		double xPos = 2270;
-		double yPos = 940;
+		double yPos = 1240;
 		double yVel = 0;
 		int spriteNum = 0;
 		boolean collision[] = new boolean[5];
@@ -176,34 +169,33 @@ class Main extends JFrame implements KeyListener {
 				}
 			}
 			if (collision[1] == false) {
-				yVel += .2;
+				yVel += .4;
 			} else {
 				yVel = 0;
 				if (spriteNum % 2 == 1)
-					spriteNum --;
+					spriteNum--;
 			}
 			if (keys[KeyEvent.VK_A] && collision[3] == false) {
-				xPos -= 3;
-				if (collision[1] == true) {
+				xPos -= 4;
+				if (collision[1] == true && spriteNum != 0) {
 					spriteNum = 0;
 				}
 			}
 			if (keys[KeyEvent.VK_D] && collision[4] == false) {
-				xPos += 3;
-				if (collision[1] == true) {
+				xPos += 4;
+				if (collision[1] == true && spriteNum != 2)
 					spriteNum = 2;
-				}
 			}
 			if (keys[KeyEvent.VK_W]) {
 				if (collision[0] == true) {
 					yVel = -4;
 				} else if (collision[1] == true) {
-					yVel -= 10;
+					yVel -= 12;
 					if (spriteNum % 2 == 0) {
-						spriteNum ++;
+						spriteNum++;
 					}
 				}
-				
+
 			}
 			yPos += yVel;
 		}

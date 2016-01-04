@@ -1,5 +1,7 @@
 package exosoft;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,7 +25,6 @@ class Main extends JFrame implements KeyListener {
 	static BufferedImage bitmap = null;
 	static Sheet sheet = new Sheet();
 	static Player player = new Player();
-	// Initializes the variables that keep track of the loops
 	static Timer drawTimer, logicTimer;
 	static BufferedImage foreground = null;
 
@@ -115,56 +116,56 @@ class Main extends JFrame implements KeyListener {
 			int c;
 			for (int i = 0; i < 5; i++)
 				collision[i] = false;
-			for (int x = (int) (xPos + 25); x <= xPos + 150; x++) {
+			lowerLoop: for (int x = (int) (xPos + 25); x <= xPos + 150; x++) {
 				for (int y = (int) (yPos + 161); y <= yPos + 162 + Math.abs(yVel); y++) {
 					c = bitmap.getRGB(x, y);
 					switch (c) {
 					case 0xFF000000:
 						collision[1] = true;
-						break;
+						break lowerLoop;
 					case 0xFF0000FF:
 						collision[0] = true;
-						break;
+						break lowerLoop;
 					}
 				}
 			}
-			for (int x = (int) (xPos + 25); x <= xPos + 150; x++) {
+			upperLoop: for (int x = (int) (xPos + 25); x <= xPos + 150; x++) {
 				for (int y = (int) yPos; y <= yPos - 1 - Math.abs(yVel); y--) {
 					c = bitmap.getRGB(x, y);
 					switch (c) {
 					case 0xFF000000:
 						collision[2] = true;
-						break;
+						break upperLoop;
 					}
 				}
 			}
-			for (int x = (int) (xPos + 20); x <= xPos + 25; x++) {
+			leftLoop: for (int x = (int) (xPos + 20); x <= xPos + 25; x++) {
 				for (int y = (int) yPos; y <= yPos + 161; y++) {
 					c = bitmap.getRGB(x, y);
 					switch (c) {
 					case 0xFFFF0000:
 						if (keys[KeyEvent.VK_E]) {
-							doors(x, y);
-							break;
+							Thread t = new Thread(new openDoor(x, y));
+							t.start();
 						}
 					case 0xFF000000:
 						collision[3] = true;
-						break;
+						break leftLoop;
 					}
 				}
 			}
-			for (int x = (int) (xPos + 150); x <= xPos + 155; x++) {
+			rightLoop: for (int x = (int) (xPos + 150); x <= xPos + 155; x++) {
 				for (int y = (int) yPos; y <= yPos + 161; y++) {
 					c = bitmap.getRGB(x, y);
 					switch (c) {
 					case 0xFFFF0000:
 						if (keys[KeyEvent.VK_E]) {
-							doors(x, y);
-							continue;
+							Thread t = new Thread(new openDoor(x, y));
+							t.start();
 						}
 					case 0xFF000000:
 						collision[4] = true;
-						continue;
+						break rightLoop;
 					}
 				}
 			}
@@ -200,23 +201,41 @@ class Main extends JFrame implements KeyListener {
 			yPos += yVel;
 		}
 
-		private void doors(int x, int y) {
-			int doorColor = 0xFFFF0000;
-			int w = 0;
-			int h = 0;
-			while (bitmap.getRGB(x - 1, y) == doorColor)
-				x--;
-			while (bitmap.getRGB(x, y - 1) == doorColor)
-				y--;
-			while (bitmap.getRGB(x + w + 1, y) == doorColor)
-				w++;
-			while (bitmap.getRGB(x, y + h + 1) == doorColor)
-				h++;
-			for (int x2 = x; x2 < x + w + 1; x2++) {
-				for (int y2 = y; y2 < y + h + 1; y2++) {
-					foreground.setRGB(x2, y2, 0x00FFFFFF);
-					bitmap.setRGB(x2, y2, 0xFFFFFFFF);
-				}
+		public class openDoor implements Runnable {
+
+			private int x;
+			private int y;
+			private int w;
+			private int h;
+
+			public openDoor(int givenX, int givenY) {
+				this.x = givenX;
+				this.y = givenY;
+			}
+
+			public void run() {
+				System.out.println(System.currentTimeMillis());
+				System.out.println();
+				int doorColor = 0xFFFF0000;
+				while (bitmap.getRGB(x - 1, y) == doorColor)
+					x--;
+				while (bitmap.getRGB(x, y - 1) == doorColor)
+					y--;
+				while (bitmap.getRGB(x + w + 1, y) == doorColor)
+					w++;
+				while (bitmap.getRGB(x, y + h + 1) == doorColor)
+					h++;
+				Graphics2D foregroundGraphics = (Graphics2D) foreground.getGraphics();
+				Graphics2D bitmapGraphics = (Graphics2D) bitmap.getGraphics();
+				bitmapGraphics.setColor(new Color(0xFFFFFFFF));
+				bitmapGraphics.fillRect(x, y, w + 1, h + 1);
+				bitmapGraphics.dispose();
+				foregroundGraphics.setComposite(AlphaComposite.Clear);
+				foregroundGraphics.fillRect(x, y, w + 1, h + 1);
+				foregroundGraphics.dispose();
+				System.out.println(System.currentTimeMillis());
+				System.out.println();
+				System.out.println();
 			}
 		}
 	}

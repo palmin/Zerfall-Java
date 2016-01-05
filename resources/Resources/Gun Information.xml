@@ -17,7 +17,7 @@
 		<rpm> 30 </rpm>
 		<eti> 192 </eti>
 		<clip> 10 </clip>
-  </gun>
+	</gun>
 	<gun name = "FAL" id = "fal">
 		<mode> semi </mode>
 		<rpm> 75 </rpm>

@@ -71,11 +71,14 @@ class Main extends JFrame implements KeyListener {
 		public void paintComponent(Graphics g1) {
 			super.paintComponent(g1);
 			Graphics2D g = (Graphics2D) g1;
+			g.setColor(Color.black);
+			g.fillRect(0, 0, getWidth(), getHeight());
 			g.translate((int) -(player.xPos + player.sprites[0].getWidth() / 2 - getWidth() / 2),
 					(int) -(player.yPos + player.sprites[0].getHeight() / 2 - getHeight() / 2));
 			g.drawImage(map, 0, 0, null);
 			g.drawImage(player.sprites[player.spriteNum], (int) player.xPos, (int) player.yPos, null);
 			g.drawImage(foreground, 0, 0, null);
+			g.dispose();
 		}
 	}
 
@@ -146,8 +149,7 @@ class Main extends JFrame implements KeyListener {
 					switch (c) {
 					case 0xFFFF0000:
 						if (keys[KeyEvent.VK_E]) {
-							Thread t = new Thread(new openDoor(x, y));
-							t.start();
+							openDoor(x, y);
 						}
 					case 0xFF000000:
 						collision[3] = true;
@@ -161,8 +163,7 @@ class Main extends JFrame implements KeyListener {
 					switch (c) {
 					case 0xFFFF0000:
 						if (keys[KeyEvent.VK_E]) {
-							Thread t = new Thread(new openDoor(x, y));
-							t.start();
+							openDoor(x, y);
 						}
 					case 0xFF000000:
 						collision[4] = true;
@@ -201,42 +202,34 @@ class Main extends JFrame implements KeyListener {
 			yPos += yVel;
 		}
 
-		public class openDoor implements Runnable {
-
-			private int x;
-			private int y;
-			private int w;
-			private int h;
-
-			public openDoor(int givenX, int givenY) {
-				this.x = givenX;
-				this.y = givenY;
-			}
-
-			public void run() {
-				System.out.println(System.currentTimeMillis());
-				System.out.println();
-				int doorColor = 0xFFFF0000;
-				while (bitmap.getRGB(x - 1, y) == doorColor)
+		public void openDoor(int givenX, int givenY) {
+			int x = givenX;
+			int y = givenY;
+			int w = 0;
+			int h = 0;
+			boolean bool[] = new boolean[4];
+			System.out.println(x);
+			System.out.println(y);
+			int doorColor = 0xFFFF0000;
+			while ((bool[0] && bool[1] && bool[2] && bool[3]) == false) {
+				if ((bool[0] = !(bitmap.getRGB(x - 1, y) == doorColor)) == false) {
 					x--;
-				while (bitmap.getRGB(x, y - 1) == doorColor)
+				} else if ((bool[1] = !(bitmap.getRGB(x, y - 1) == doorColor)) == false) {
 					y--;
-				while (bitmap.getRGB(x + w + 1, y) == doorColor)
+				} else if ((bool[2] = !(bitmap.getRGB(x + w + 1, y) == doorColor)) == false) {
 					w++;
-				while (bitmap.getRGB(x, y + h + 1) == doorColor)
+				} else if ((bool[3] = !(bitmap.getRGB(x, y + h + 1) == doorColor)) == false) {
 					h++;
-				Graphics2D foregroundGraphics = (Graphics2D) foreground.getGraphics();
-				Graphics2D bitmapGraphics = (Graphics2D) bitmap.getGraphics();
-				bitmapGraphics.setColor(new Color(0xFFFFFFFF));
-				bitmapGraphics.fillRect(x, y, w + 1, h + 1);
-				bitmapGraphics.dispose();
-				foregroundGraphics.setComposite(AlphaComposite.Clear);
-				foregroundGraphics.fillRect(x, y, w + 1, h + 1);
-				foregroundGraphics.dispose();
-				System.out.println(System.currentTimeMillis());
-				System.out.println();
-				System.out.println();
+				}
 			}
+			Graphics2D foregroundGraphics = (Graphics2D) foreground.getGraphics();
+			Graphics2D bitmapGraphics = (Graphics2D) bitmap.getGraphics();
+			bitmapGraphics.setColor(new Color(0xFFFFFFFF));
+			bitmapGraphics.fillRect(x, y, w + 1, h + 1);
+			bitmapGraphics.dispose();
+			foregroundGraphics.setComposite(AlphaComposite.Clear);
+			foregroundGraphics.fillRect(x, y, w + 1, h + 1);
+			foregroundGraphics.dispose();
 		}
 	}
 }

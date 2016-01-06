@@ -60,6 +60,7 @@ class Main extends JFrame implements KeyListener {
 			bitmap = ImageIO.read(new File("resources/Maps/bitmap.png"));
 			foreground = ImageIO.read(new File("resources/Maps/foreground.png"));
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		drawTimer.start();
 		logicTimer.start();
@@ -80,7 +81,7 @@ class Main extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// Not sure why this needs to be here, but whatever.
+		keys[e.getKeyCode()] = true;
 	}
 
 	@Override
@@ -173,8 +174,7 @@ class Main extends JFrame implements KeyListener {
 				yVel += .4;
 			} else {
 				yVel = 0;
-				if (spriteNum % 2 == 1)
-					spriteNum--;
+				spriteNum -= spriteNum % 2;
 			}
 			if (keys[KeyEvent.VK_A] && collision[3] == false) {
 				xPos -= 4;
